@@ -12,6 +12,11 @@ name_xy = (433, 438)
 phone_xy = (643, 521)
 qr_xy = (65, 302)
 
+# The font-sizes
+devil_number_size = 19
+name_size = 19
+phone_size = 19
+
 # Sample Data
 pk = 7
 name = u'Shashwot Adhikari'
@@ -21,13 +26,16 @@ devil_number = u'#007'
 img = Image.open('watermarked_card.jpg')
 draw = ImageDraw.Draw(img)
 # write devil number
-font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'), 19)
+font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'),
+                          devil_number_size)
 draw.text(devil_number_xy, devil_number, (255, 255, 255), font=font)
 # write name
-font = ImageFont.truetype(os.path.join('fonts', 'Aileron-Regular.otf'), 19)
+font = ImageFont.truetype(os.path.join('fonts', 'Aileron-Regular.otf'),
+                          name_size)
 draw.text(name_xy, name, (255, 255, 255), font=font)
 # write phone number
-font = ImageFont.truetype(os.path.join('fonts', 'Aileron-Regular.otf'), 19)
+font = ImageFont.truetype(os.path.join('fonts', 'Aileron-Regular.otf'),
+                          phone_size)
 draw.text(phone_xy, phone, (255, 255, 255), font=font)
 
 # download qr
