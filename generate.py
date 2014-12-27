@@ -7,7 +7,7 @@ from urllib import urlretrieve
 import os
 
 # The co-ordinates
-devil_number_xy = (614, 68)
+devil_number_ending_xy = (744, 68)
 name_ending_xy = (1010, 438)
 phone_xy = (643, 521)
 qr_xy = (65, 302)
@@ -23,17 +23,16 @@ draw_qr = False
 pk = 7
 name = u'Prakash Man Singh Katuwal'
 phone = u'98x11x3333'
-devil_number = u'007'
+devil_number = u'00000007'
 
-
-# Pre-processing
+# Pre-process the name
 name = name.upper()
 names = name.split()
 last_name = names[-1]
 names_sans_last = names[0:-1]
 if len(names_sans_last) > 1:
     middle_names = names_sans_last[1:]
-    # multiple middle names support :D
+    # multiple middle names support - Amrit Bahadur Khanal Kshetri :D
     middle_name_initials_list = [middle_name[0]+'.' for middle_name in middle_names]
     middle_name_initials = '  '.join(middle_name_initials_list)
     name_sans_last = names_sans_last[0] + '  ' + middle_name_initials + ' '
@@ -48,7 +47,10 @@ draw = ImageDraw.Draw(img)
 # write devil number
 font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'),
                           devil_number_size)
+devil_number_text_size = draw.textsize('#' + devil_number, font=font)
+devil_number_xy = (devil_number_ending_xy[0] - devil_number_text_size[0], devil_number_ending_xy[1])
 draw.text(devil_number_xy, '#' + devil_number, (255, 255, 255), font=font)
+
 
 # write name
 name_sans_last_font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'), name_size)
