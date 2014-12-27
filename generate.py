@@ -8,7 +8,7 @@ import os
 
 # The co-ordinates
 devil_number_xy = (614, 68)
-name_xy = (433, 438)
+name_ending_xy = (1010, 438)
 phone_xy = (643, 521)
 qr_xy = (65, 302)
 
@@ -21,7 +21,7 @@ draw_qr = False
 
 # Sample Data
 pk = 7
-name = u'AmritanandakumarPrasad Bahadur Khanal Kshetriphalaat'
+name = u'Prakash Man Singh Katuwal'
 phone = u'98x11x3333'
 devil_number = u'007'
 
@@ -35,8 +35,8 @@ if len(names_sans_last) > 1:
     middle_names = names_sans_last[1:]
     # multiple middle names support :D
     middle_name_initials_list = [middle_name[0]+'.' for middle_name in middle_names]
-    middle_name_initials = ' '.join(middle_name_initials_list)
-    name_sans_last = names_sans_last[0] + ' ' + middle_name_initials + ' '
+    middle_name_initials = '  '.join(middle_name_initials_list)
+    name_sans_last = names_sans_last[0] + '  ' + middle_name_initials + ' '
 else:
     name_sans_last = names_sans_last[0] + ' '
 
@@ -54,11 +54,16 @@ draw.text(devil_number_xy, '#' + devil_number, (255, 255, 255), font=font)
 name_sans_last_font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'), name_size)
 name_sans_last_size = draw.textsize(name_sans_last, font=name_sans_last_font)
 
-last_name_xy = (name_xy[0] + name_sans_last_size[0], name_xy[1])
 
-draw.text(name_xy, name_sans_last, (255, 255, 255), font=font)
+
 last_name_font = ImageFont.truetype(os.path.join('fonts', 'Aileron-BoldItalic.otf'), name_size)
-# last_name_font_size = draw.textsize(last_name, last_name_font)
+last_name_size = draw.textsize(last_name, last_name_font)
+
+name_length = name_sans_last_size[0] + last_name_size[0]
+# print name_length
+name_xy = (name_ending_xy[0] - name_length, name_ending_xy[1])
+last_name_xy = (name_xy[0] + name_sans_last_size[0], name_xy[1])
+draw.text(name_xy, name_sans_last, (255, 255, 255), font=font)
 draw.text(last_name_xy, last_name, (255, 255, 255), font=last_name_font)
 
 
