@@ -45,6 +45,17 @@ urlretrieve(
             'http://api.qrserver.com/v1/create-qr-code/?data=http://manutd.org.np/' + devil_number + '&size=160x160&ecc=H&color=ffffff&bgcolor=000',
             os.path.join('qrs', str(pk) + '.png'))
 qr = Image.open(os.path.join('qrs', str(pk) + '.png'))
+#make qr transparent
+qr = qr.convert('RGBA')
+data = qr.getdata()
+new_data = []
+for item in data:
+    if item[0] == 0 and item[1] == 0 and item[2] == 0:
+        new_data.append((255, 255, 255, 0))
+    else:
+        new_data.append(item)
+qr.putdata(new_data)
+qr.save(os.path.join('qrs', str(pk) + '.png'))
 # write qr to image
 img.paste(qr, qr_xy)
 
