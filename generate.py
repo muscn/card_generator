@@ -21,7 +21,7 @@ draw_qr = False
 
 # Sample Data
 pk = 7
-name = u'Amrit Bahadur Khanal Chhetri'
+name = u'AmritanandakumarPrasad Bahadur Khanal Kshetriphalaat'
 phone = u'98x11x3333'
 devil_number = u'007'
 
@@ -50,10 +50,19 @@ font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'),
                           devil_number_size)
 draw.text(devil_number_xy, '#' + devil_number, (255, 255, 255), font=font)
 
-# write first (and middle, if any) name
-font = ImageFont.truetype(os.path.join('fonts', 'Aileron-Regular.otf'),
-                          name_size)
+# write name
+name_sans_last_font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'), name_size)
+name_sans_last_size = draw.textsize(name_sans_last, font=name_sans_last_font)
+
+last_name_xy = (name_xy[0] + name_sans_last_size[0], name_xy[1])
+
 draw.text(name_xy, name_sans_last, (255, 255, 255), font=font)
+last_name_font = ImageFont.truetype(os.path.join('fonts', 'Aileron-BoldItalic.otf'), name_size)
+# last_name_font_size = draw.textsize(last_name, last_name_font)
+draw.text(last_name_xy, last_name, (255, 255, 255), font=last_name_font)
+
+
+
 # write phone number
 font = ImageFont.truetype(os.path.join('fonts', 'Aileron-Regular.otf'),
                           phone_size)
