@@ -23,7 +23,8 @@ name = u'Shashwot Adhikari'
 phone = u'98x11x3333'
 devil_number = u'007'
 
-img = Image.open('watermarked_card.jpg')
+img = Image.open('watermarked.jpg')
+# img = Image.open('watermarked_with_qr.jpg')
 draw = ImageDraw.Draw(img)
 # write devil number
 font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'),
