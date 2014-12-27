@@ -21,13 +21,16 @@ draw_qr = False
 
 # Sample Data
 pk = 7
-name = u'Shashwot Adhikari'
+name = u'Shashwot Singh Adhikari'
 phone = u'98x11x3333'
 devil_number = u'007'
 
 
 # Pre-processing
 name = name.upper()
+names = name.split()
+last_name = names[-1]
+name_sans_last = names[0:-1]
 
 
 img = Image.open('watermarked.jpg')
