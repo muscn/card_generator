@@ -3,7 +3,7 @@
 from PIL import ImageFont
 from PIL import Image
 from PIL import ImageDraw
-# from urllib import urlretrieve
+from urllib import urlretrieve
 import os
 
 # The co-ordinates
@@ -21,7 +21,7 @@ phone_size = 19
 pk = 7
 name = u'Shashwot Adhikari'
 phone = u'98x11x3333'
-devil_number = u'#007'
+devil_number = u'007'
 
 img = Image.open('watermarked_card.jpg')
 draw = ImageDraw.Draw(img)
@@ -39,13 +39,14 @@ font = ImageFont.truetype(os.path.join('fonts', 'Aileron-Regular.otf'),
 draw.text(phone_xy, phone, (255, 255, 255), font=font)
 
 # download qr
-# if not os.path.exists(os.path.join(settings.MEDIA_ROOT, 'qrs')):
-# os.makedirs(os.path.join(settings.MEDIA_ROOT, 'qrs'))
-# urlretrieve('http://api.qrserver.com/v1/create-qr-code/?data=http://manutd.org.np/007&size=160x160&ecc=H',
-#             os.path.join(settings.MEDIA_ROOT, 'qrs', str(self.id) + '.png'))
-# qr = Image.open(os.path.join(settings.MEDIA_ROOT, 'qrs', str(self.id) + '.png'))
+if not os.path.exists('qrs'):
+    os.makedirs('qrs')
+urlretrieve(
+            'http://api.qrserver.com/v1/create-qr-code/?data=http://manutd.org.np/' + devil_number + '&size=160x160&ecc=H&color=ffffff&bgcolor=000',
+            os.path.join('qrs', str(pk) + '.png'))
+qr = Image.open(os.path.join('qrs', str(pk) + '.png'))
 # write qr to image
-# draw.bitmap(qr_xy, qr)
+img.paste(qr, qr_xy)
 
 if not os.path.exists('sample_cards'):
     os.makedirs('sample_cards')
