@@ -57,7 +57,8 @@ for item in data:
 qr.putdata(new_data)
 qr.save(os.path.join('qrs', str(pk) + '.png'))
 # write qr to image
-img.paste(qr, qr_xy)
+img = img.convert('RGBA')
+img.paste(qr, qr_xy, qr)
 
 if not os.path.exists('sample_cards'):
     os.makedirs('sample_cards')
