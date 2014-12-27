@@ -21,7 +21,7 @@ draw_qr = False
 
 # Sample Data
 pk = 7
-name = u'Shashwot Singh Adhikari'
+name = u'Amrit Bahadur Khanal Chhetri'
 phone = u'98x11x3333'
 devil_number = u'007'
 
@@ -30,8 +30,15 @@ devil_number = u'007'
 name = name.upper()
 names = name.split()
 last_name = names[-1]
-name_sans_last = names[0:-1]
-
+names_sans_last = names[0:-1]
+if len(names_sans_last) > 1:
+    middle_names = names_sans_last[1:]
+    # multiple middle names support :D
+    middle_name_initials_list = [middle_name[0]+'.' for middle_name in middle_names]
+    middle_name_initials = ' '.join(middle_name_initials_list)
+    name_sans_last = names_sans_last[0] + ' ' + middle_name_initials + ' '
+else:
+    name_sans_last = names_sans_last[0] + ' '
 
 img = Image.open('watermarked.jpg')
 # img = Image.open('watermarked_with_qr.jpg')
@@ -42,10 +49,11 @@ draw = ImageDraw.Draw(img)
 font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'),
                           devil_number_size)
 draw.text(devil_number_xy, '#' + devil_number, (255, 255, 255), font=font)
-# write name
+
+# write first (and middle, if any) name
 font = ImageFont.truetype(os.path.join('fonts', 'Aileron-Regular.otf'),
                           name_size)
-draw.text(name_xy, name, (255, 255, 255), font=font)
+draw.text(name_xy, name_sans_last, (255, 255, 255), font=font)
 # write phone number
 font = ImageFont.truetype(os.path.join('fonts', 'Aileron-Regular.otf'),
                           phone_size)
