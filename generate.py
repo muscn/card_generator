@@ -7,6 +7,12 @@ from urllib import urlretrieve
 import os
 import re
 
+# Sample Data
+pk = 7
+name = u'Mary Louise Streep'
+phone = u'9876543211'
+devil_number = u'007'
+
 # The co-ordinates
 devil_number_ending_xy = (744, 68)
 name_ending_xy = (1010, 438)
@@ -18,15 +24,11 @@ devil_number_size = 58
 name_size = 60
 phone_size = 43
 
-draw_qr = True
+#Configuration
+base_image = 'watermarked.jpg'
+draw_qr = False
 # possible values: L, M, Q, H
 qr_error_correction = 'M'
-
-# Sample Data
-pk = 7
-name = u'Shaswot Adhikari'
-phone = u'9876543211'
-devil_number = u'007'
 
 # Pre-process the name
 name = name.upper()
@@ -57,7 +59,7 @@ if matches:
     phone_code = '+' + phone_code + '  '
 
 
-img = Image.open('watermarked.jpg')
+img = Image.open(base_image)
 # img = Image.open('watermarked_with_qr.jpg')
 # img = Image.open('front.jpg')
 
@@ -124,4 +126,4 @@ if draw_qr:
 if not os.path.exists('sample_cards'):
     os.makedirs('sample_cards')
 
-img.save(os.path.join('sample_cards', str(pk) + '.jpg'))
+img.save(os.path.join('sample_cards', str(pk) + '.png'))
