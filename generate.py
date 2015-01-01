@@ -23,7 +23,7 @@ draw_qr = False
 # Sample Data
 pk = 7
 name = u'Prakash Man Bhakta Ip'
-phone = u'97798x113834x'
+phone = u'9779851138343'
 devil_number = u'00000007'
 
 # Pre-process the name
@@ -44,8 +44,9 @@ else:
 pattern = '^([0|\\+[0-9]{1,5})?[-\s]?([7-9][0-9]{9})$'
 matches = re.search(pattern, phone)
 if matches:
-    phone_code = matches[0]
-    phone = matches[1]
+
+    phone_code = matches.groups()[0]
+    phone = matches.groups()[1]
 else:
     phone_code = ''
 
@@ -57,11 +58,11 @@ img = Image.open('watermarked.jpg')
 draw = ImageDraw.Draw(img)
 
 # write devil number
-font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'),
-                          devil_number_size)
-devil_number_text_size = draw.textsize('#' + devil_number, font=font)
+devil_number_font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'),
+                                       devil_number_size)
+devil_number_text_size = draw.textsize('#' + devil_number, font=devil_number_font)
 devil_number_xy = (devil_number_ending_xy[0] - devil_number_text_size[0], devil_number_ending_xy[1])
-draw.text(devil_number_xy, '#' + devil_number, (255, 255, 255), font=font)
+draw.text(devil_number_xy, '#' + devil_number, (255, 255, 255), font=devil_number_font)
 
 # write name
 name_sans_last_font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'), name_size)
@@ -78,20 +79,27 @@ draw.text(last_name_xy, last_name, (255, 255, 255), font=last_name_font)
 
 # write phone number
 phone_font = ImageFont.truetype(os.path.join('fonts', 'Aileron-Regular.otf'),
-                          phone_size)
-phone_size = draw.textsize(phone, phone_font)
-phone_xy = (phone_ending_xy[0] - phone_size[0], phone_ending_xy[1])
-draw.text(phone_xy, phone, (255, 255, 255), font=font)
+                                     phone_size)
+phone_font_size = draw.textsize(phone, phone_font)
+phone_xy = (phone_ending_xy[0] - phone_font_size[0], phone_ending_xy[1])
+draw.text(phone_xy, phone, (255, 255, 255), font=phone_font)
+phone_code_font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'),
+                                     phone_size)
+phone_code_size = draw.textsize(phone_code, phone_code_font)
+phone_code_xy = (phone_xy[0] - phone_code_size[0], phone_ending_xy[1])
+print phone_code == ''
+draw.text(phone_code_xy, phone_code, (255, 255, 255), font=phone_code_font)
+
 
 
 if draw_qr:
     # download qr
     if not os.path.exists('qrs'):
         os.makedirs('qrs')
-    urlretrieve(
-                'http://api.qrserver.com/v1/create-qr-code/?data=http://manutd.org.np/' + devil_number + '&size=160x160&ecc=H&color=ffffff&bgcolor=000',
-                os.path.join('qrs', str(pk) + '.png'))
-    qr = Image.open(os.path.join('qrs', str(pk) + '.png'))
+        urlretrieve(
+                    'http://api.qrserver.com/v1/create-qr-code/?data=http://manutd.org.np/' + devil_number + '&size=160x160&ecc=H&color=ffffff&bgcolor=000',
+                    os.path.join('qrs', str(pk) + '.png'))
+        qr = Image.open(os.path.join('qrs', str(pk) + '.png'))
     #make qr transparent
     qr = qr.convert('RGBA')
     data = qr.getdata()
@@ -101,12 +109,13 @@ if draw_qr:
             new_data.append((255, 255, 255, 0))
         else:
             new_data.append(item)
-    qr.putdata(new_data)
-    qr.save(os.path.join('qrs', str(pk) + '.png'))
+            qr.putdata(new_data)
+            qr.save(os.path.join('qrs', str(pk) + '.png'))
     # write qr to image
     img = img.convert('RGBA')
     img.paste(qr, qr_xy, qr)
 
 if not os.path.exists('sample_cards'):
     os.makedirs('sample_cards')
+
 img.save(os.path.join('sample_cards', str(pk) + '.jpg'))
