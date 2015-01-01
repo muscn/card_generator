@@ -22,9 +22,9 @@ draw_qr = False
 
 # Sample Data
 pk = 7
-name = u'Prakash Man Bhakta Ip'
-phone = u'9779851138343'
-devil_number = u'00000007'
+name = u'Amrit Bahadur Kshetri Khanal'
+phone = u'+977-9876543211'
+devil_number = u'007'
 
 # Pre-process the name
 name = name.upper()
@@ -41,15 +41,18 @@ else:
     name_sans_last = names_sans_last[0] + ' '
 
 # Pre-process the phone number
+phone_code = None
 pattern = '^([0|\\+[0-9]{1,5})?[-\s]?([7-9][0-9]{9})$'
 matches = re.search(pattern, phone)
 if matches:
-
     phone_code = matches.groups()[0]
     phone = matches.groups()[1]
+    if phone_code:
+        phone_code = phone_code.strip('\n\t\r\+\-')
+        phone_code = phone_code.lstrip('00')
+    else:
+        phone_code = '977'
     phone_code = '+' + phone_code + '  '
-else:
-    phone_code = ''
 
 
 img = Image.open('watermarked.jpg')
@@ -84,11 +87,12 @@ phone_font = ImageFont.truetype(os.path.join('fonts', 'Aileron-Italic.otf'),
 phone_font_size = draw.textsize(phone, phone_font)
 phone_xy = (phone_ending_xy[0] - phone_font_size[0], phone_ending_xy[1])
 draw.text(phone_xy, phone, (255, 255, 255), font=phone_font)
-phone_code_font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'),
-                                     phone_size)
-phone_code_size = draw.textsize(phone_code, phone_code_font)
-phone_code_xy = (phone_xy[0] - phone_code_size[0], phone_ending_xy[1])
-draw.text(phone_code_xy, phone_code, (255, 255, 255), font=phone_code_font)
+if phone_code:
+    phone_code_font = ImageFont.truetype(os.path.join('fonts', 'Aileron-ThinItalic.otf'),
+                                         phone_size)
+    phone_code_size = draw.textsize(phone_code, phone_code_font)
+    phone_code_xy = (phone_xy[0] - phone_code_size[0], phone_ending_xy[1])
+    draw.text(phone_code_xy, phone_code, (255, 255, 255), font=phone_code_font)
 
 
 
