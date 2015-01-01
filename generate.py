@@ -20,12 +20,12 @@ phone_size = 43
 
 draw_qr = True
 # possible values: L, M, Q, H
-qr_error_correction = 'L'
+qr_error_correction = 'M'
 
 # Sample Data
 pk = 7
-name = u'Amrit Bahadur Kshetri Khanal'
-phone = u'+977-9876543211'
+name = u'Shaswot Adhikari'
+phone = u'9876543211'
 devil_number = u'007'
 
 # Pre-process the name
