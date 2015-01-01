@@ -5,6 +5,7 @@ from PIL import Image
 from PIL import ImageDraw
 from urllib import urlretrieve
 import os
+import re
 
 # The co-ordinates
 devil_number_ending_xy = (744, 68)
@@ -21,8 +22,8 @@ draw_qr = False
 
 # Sample Data
 pk = 7
-name = u'Prakash Man Bhakta I'
-phone = u'98x113834x'
+name = u'Prakash Man Bhakta Ip'
+phone = u'97798x113834x'
 devil_number = u'00000007'
 
 # Pre-process the name
@@ -38,6 +39,16 @@ if len(names_sans_last) > 1:
     name_sans_last = names_sans_last[0] + '  ' + middle_name_initials + ' '
 else:
     name_sans_last = names_sans_last[0] + ' '
+
+# Pre-process the phone number
+pattern = '^([0|\\+[0-9]{1,5})?[-\s]?([7-9][0-9]{9})$'
+matches = re.search(pattern, phone)
+if matches:
+    phone_code = matches[0]
+    phone = matches[1]
+else:
+    phone_code = ''
+
 
 img = Image.open('watermarked.jpg')
 # img = Image.open('watermarked_with_qr.jpg')
