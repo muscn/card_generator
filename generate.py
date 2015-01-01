@@ -11,7 +11,7 @@ import re
 devil_number_ending_xy = (744, 68)
 name_ending_xy = (1010, 438)
 phone_ending_xy = (1010, 520)
-qr_xy = (65, 302)
+qr_xy = (65, 393)
 
 # The font-sizes
 devil_number_size = 58
@@ -19,6 +19,8 @@ name_size = 60
 phone_size = 43
 
 draw_qr = True
+# possible values: L, M, Q, H
+qr_error_correction = 'L'
 
 # Sample Data
 pk = 7
@@ -101,7 +103,7 @@ if draw_qr:
     if not os.path.exists('qrs'):
         os.makedirs('qrs')
     urlretrieve(
-                'http://api.qrserver.com/v1/create-qr-code/?data=http://manutd.org.np/' + devil_number + '&size=160x160&ecc=H&color=ffffff&bgcolor=000',
+                'http://api.qrserver.com/v1/create-qr-code/?data=http://manutd.org.np/' + devil_number + '&size=208x208&ecc=' + qr_error_correction + '&color=ffffff&bgcolor=000',
                 os.path.join('qrs', str(pk) + '.png'))
     qr = Image.open(os.path.join('qrs', str(pk) + '.png'))
     #make qr transparent
