@@ -18,7 +18,7 @@ devil_number_size = 58
 name_size = 60
 phone_size = 43
 
-draw_qr = False
+draw_qr = True
 
 # Sample Data
 pk = 7
@@ -100,10 +100,10 @@ if draw_qr:
     # download qr
     if not os.path.exists('qrs'):
         os.makedirs('qrs')
-        urlretrieve(
-                    'http://api.qrserver.com/v1/create-qr-code/?data=http://manutd.org.np/' + devil_number + '&size=160x160&ecc=H&color=ffffff&bgcolor=000',
-                    os.path.join('qrs', str(pk) + '.png'))
-        qr = Image.open(os.path.join('qrs', str(pk) + '.png'))
+    urlretrieve(
+                'http://api.qrserver.com/v1/create-qr-code/?data=http://manutd.org.np/' + devil_number + '&size=160x160&ecc=H&color=ffffff&bgcolor=000',
+                os.path.join('qrs', str(pk) + '.png'))
+    qr = Image.open(os.path.join('qrs', str(pk) + '.png'))
     #make qr transparent
     qr = qr.convert('RGBA')
     data = qr.getdata()
@@ -113,8 +113,8 @@ if draw_qr:
             new_data.append((255, 255, 255, 0))
         else:
             new_data.append(item)
-            qr.putdata(new_data)
-            qr.save(os.path.join('qrs', str(pk) + '.png'))
+    qr.putdata(new_data)
+    qr.save(os.path.join('qrs', str(pk) + '.png'))
     # write qr to image
     img = img.convert('RGBA')
     img.paste(qr, qr_xy, qr)
